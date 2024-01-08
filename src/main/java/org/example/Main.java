@@ -88,7 +88,7 @@ public class Main {
 
 //        10.下载配置信息
 //        CY.Method_10_1_Down_Config_fenzu();
-//        CY.Method_10_Down_Config_ReadSQL(version_Config_Path,ConfigAPI);
+        CY.Method_10_Down_Config_ReadSQL(version_Config_Path,ConfigAPI);
         int GroupNumber = 4963;
 //        CY.Method_10_Down_Config_oneGroup(GroupNumber,version_Config_Path,ConfigAPI);
 
