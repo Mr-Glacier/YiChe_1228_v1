@@ -1,10 +1,14 @@
 package org.example.Controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import org.example.Dao_pic.Dao_brand_pic;
 import org.example.Dao_pic.Dao_model_mid;
 import org.example.Dao_pic.Dao_model_pic;
+import org.example.Dao_pic.Dao_version_360;
 import org.example.Entity_pic.Model_pic;
+import org.example.Entity_pic.Version_360;
 import org.example.Entity_pic.brand_pic;
 import org.example.Entity_pic.model_pic_mid;
 import org.example.Until.MD5Until;
@@ -283,6 +287,7 @@ public class Controller_picture {
 
     public void Method_9_Analysis_hase36(String outerSavePath, String innerSavePath){
         Dao_model_pic dao_model_pic = new Dao_model_pic(1, 2);
+        Dao_version_360 dao_version_360 = new Dao_version_360(1,3);
         ArrayList<Object> BeanList = dao_model_pic.MethodFind();
         for (Object bean : BeanList) {
             Model_pic model_pic = (Model_pic) bean;
@@ -290,6 +295,84 @@ public class Controller_picture {
             String model_id = model_pic.getC_model_id();
 
             String content_out  = readUntil.Method_ReadFile(outerSavePath+model_id+".txt");
+
+            JSONObject jsonObject = JSON.parseObject(content_out).getJSONObject("data");
+
+            if (jsonObject!=null){
+                JSONArray jsonArray = jsonObject.getJSONArray("list");
+
+                if (jsonArray !=null){
+                    for (int i = 0; i < jsonArray.size(); i++) {
+
+                        JSONObject one = jsonArray.getJSONObject(i);
+                        String C_serialId=one.getString("serialId");
+                        String C_carId=one.getString("carId");
+                        String C_carName=one.getString("carName");
+                        String C_year=one.getString("year");
+                        String C_saleStatus=one.getString("saleStatus");
+                        String C_referPrice=one.getString("referPrice");
+                        String C_albumType=one.getString("albumType");
+                        String C_albumId=one.getString("albumId");
+                        String C_path=one.getString("path");
+                        String C_pathWp=one.getString("pathWp");
+
+                        Version_360 version_360 = new Version_360();
+                        version_360.setC_serialId(C_serialId);
+                        version_360.setC_carId(C_carId);
+                        version_360.setC_carName(C_carName);
+                        version_360.setC_year(C_year);
+                        version_360.setC_saleStatus(C_saleStatus);
+                        version_360.setC_referPrice(C_referPrice);
+                        version_360.setC_albumType(C_albumType);
+                        version_360.setC_albumId(C_albumId);
+                        version_360.setC_path(C_path);
+                        version_360.setC_pathWp(C_pathWp);
+                        version_360.setC_type_version("out");
+
+                        dao_version_360.MethodInsert(version_360);
+                    }
+                }
+            }
+
+            String content_in  = readUntil.Method_ReadFile(innerSavePath+model_id+".txt");
+
+            JSONObject jsonObject_in = JSON.parseObject(content_in).getJSONObject("data");
+
+            if (jsonObject_in!=null){
+                JSONArray jsonArray = jsonObject_in.getJSONArray("list");
+
+                if (jsonArray !=null){
+                    for (int i = 0; i < jsonArray.size(); i++) {
+
+                        JSONObject one = jsonArray.getJSONObject(i);
+                        String C_serialId=one.getString("serialId");
+                        String C_carId=one.getString("carId");
+                        String C_carName=one.getString("carName");
+                        String C_year=one.getString("year");
+                        String C_saleStatus=one.getString("saleStatus");
+                        String C_referPrice=one.getString("referPrice");
+                        String C_albumType=one.getString("albumType");
+                        String C_albumId=one.getString("albumId");
+                        String C_path=one.getString("path");
+                        String C_pathWp=one.getString("pathWp");
+
+                        Version_360 version_360 = new Version_360();
+                        version_360.setC_serialId(C_serialId);
+                        version_360.setC_carId(C_carId);
+                        version_360.setC_carName(C_carName);
+                        version_360.setC_year(C_year);
+                        version_360.setC_saleStatus(C_saleStatus);
+                        version_360.setC_referPrice(C_referPrice);
+                        version_360.setC_albumType(C_albumType);
+                        version_360.setC_albumId(C_albumId);
+                        version_360.setC_path(C_path);
+                        version_360.setC_pathWp(C_pathWp);
+                        version_360.setC_type_version("inner");
+
+                        dao_version_360.MethodInsert(version_360);
+                    }
+                }
+            }
 
 
 
