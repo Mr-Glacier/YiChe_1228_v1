@@ -13,6 +13,16 @@ public class Version_360 {
     private String C_path="-";
     private String C_pathWp="-";
 
+    private String DownState;
+
+    public String getDownState() {
+        return DownState;
+    }
+
+    public void setDownState(String downState) {
+        DownState = downState;
+    }
+
     private String C_type_version;
 
     public String getC_type_version() {
